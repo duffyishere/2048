@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const highScoreElement = document.getElementById('high-score');
     const resetButton = document.getElementById('reset');
 
+    const WIDTH = 4;
     let score = 0;
     let highScore = 0;
 
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
         const newValue = Math.random() < 0.9 ? 2 : 4;
         randomCell.textContent = newValue;
-        randomCell.classList.add(`tile-${newValue}`);
+        // randomCell.classList.add(`tile-${newValue}`);
     }
 
     // Update the board (style the cells based on their values)
@@ -84,11 +85,79 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function moveRight() {
+        for (let i = 0; i < 16; i++) {
+            if (i % 4 == 0) {
+                let first = cells[i].textContent;
+                let second = cells[i + 1].textContent;
+                let third = cells[i + 2].textContent;
+                let fourth = cells[i + 3].textContent;
+                let row = [parseInt(first), parseInt(second), parseInt(third), parseInt(fourth)]
+                
+                let filteredRow = row.filter(num => num)
+                let zeroCnt = 4 - filteredRow.length;
+                let zeros = Array(zeroCnt).fill('');
+                let newRow = zeros.concat(filteredRow);
+
+                cells[i].textContent = newRow[0];
+                cells[i + 1].textContent = newRow[1];
+                cells[i + 2].textContent = newRow[2];
+                cells[i + 3].textContent = newRow[3];
+            }
+        }
+    }
+
+    function moveUp() {
+        for (let i = 0; i < 4; i++) {
+            let first = cells[i].textContent;
+            let second = cells[i + WIDTH].textContent;
+            let third = cells[i + WIDTH * 2].textContent;
+            let fourth = cells[i + WIDTH * 3].textContent;
+            let colum = [parseInt(first), parseInt(second), parseInt(third), parseInt(fourth)]
+            
+            let filteredColum = colum.filter(num => num)
+            let zeroCnt = 4 - filteredColum.length;
+            let zeros = Array(zeroCnt).fill('');
+            let newRow = filteredColum.concat(zeros);
+
+            cells[i].textContent = newRow[0];
+            cells[i + WIDTH].textContent = newRow[1];
+            cells[i + WIDTH * 2].textContent = newRow[2];
+            cells[i + WIDTH * 3].textContent = newRow[3];
+        }
+    }
+
+    function moveDown() {
+        for (let i = 0; i < 4; i++) {
+            let first = cells[i].textContent;
+            let second = cells[i + WIDTH].textContent;
+            let third = cells[i + WIDTH * 2].textContent;
+            let fourth = cells[i + WIDTH * 3].textContent;
+            let colum = [parseInt(first), parseInt(second), parseInt(third), parseInt(fourth)]
+            
+            let filteredColum = colum.filter(num => num)
+            let zeroCnt = 4 - filteredColum.length;
+            let zeros = Array(zeroCnt).fill('');
+            let newRow = zeros.concat(filteredColum);
+
+            cells[i].textContent = newRow[0];
+            cells[i + WIDTH].textContent = newRow[1];
+            cells[i + WIDTH * 2].textContent = newRow[2];
+            cells[i + WIDTH * 3].textContent = newRow[3];
+        }
+    }
+
         ///assign functions to keys
         function control(e) {
             if (e.key === "ArrowLeft") {
-                moveLeft()
+                moveLeft();
+            } else if (e.key == "ArrowRight") {
+                moveRight();
+            } else if (e.key == "ArrowUp") {
+                moveUp();
+            } else if (e.key === "ArrowDown") {
+                moveDown();
             }
         }
-        document.addEventListener("keydown", control)
+        document.addEventListener("keydown", control);
 });
