@@ -147,16 +147,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-        ///assign functions to keys
-        function control(e) {
+    function keyLeft() {
+        moveLeft();
+    }
+    function keyRight() {
+        moveRight();
+    }
+    function keyUp() {
+        moveUp();
+    }
+    function keyDown() {
+        moveDown();
+    }
+
+    ///assign functions to keys
+    function control(e) {
             if (e.key === "ArrowLeft") {
-                moveLeft();
+                keyLeft();
             } else if (e.key == "ArrowRight") {
-                moveRight();
+                keyRight();
             } else if (e.key == "ArrowUp") {
-                moveUp();
+                keyUp();
             } else if (e.key === "ArrowDown") {
-                moveDown();
+                keyDown();
             }
         }
         document.addEventListener("keydown", control);
