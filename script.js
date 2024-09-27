@@ -147,16 +147,48 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function mergeRow() {
+        for (let i = 0; i < 15; i++) {
+            if (cells[i].innerHTML === cells[i + 1].innerHTML) {
+                let sum = parseInt(cells[i].innerHTML) + parseInt(cells[i + 1].innerHTML);
+                cells[i].innerHTML = sum;
+                cells[i + 1].innerHTML = '';
+                score += sum;
+                scoreElement.innerHTML = score;
+            }
+        }
+    }
+
+    function mergeColumn() {
+        for (let i = 0; i < 12; i++) {
+            if (cells[i].innerHTML === cells[i + WIDTH].innerHTML) {
+                let sum = parseInt(cells[i].innerHTML) + parseInt(cells[i + WIDTH].innerHTML);
+                cells[i].innerHTML = sum;
+                cells[i + WIDTH].innerHTML = '';
+                score += sum;
+                scoreElement.innerHTML = score;
+            }
+        }
+    }
+
     function keyLeft() {
+        moveLeft();
+        mergeRow();
         moveLeft();
     }
     function keyRight() {
         moveRight();
+        mergeRow();
+        moveRight();
     }
     function keyUp() {
         moveUp();
+        mergeColumn();
+        moveUp();
     }
     function keyDown() {
+        moveDown();
+        mergeColumn();
         moveDown();
     }
 
@@ -170,7 +202,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 keyUp();
             } else if (e.key === "ArrowDown") {
                 keyDown();
+            } else {
+                return;
             }
+            addRandomTile();
         }
         document.addEventListener("keydown", control);
 });
